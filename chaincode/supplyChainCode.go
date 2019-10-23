@@ -56,9 +56,9 @@ func (t *SupplyChaincode) makeTransaction(stub shim.ChaincodeStubInterface, args
 	from := args[2]
 	to := args[3]
 	amount, _ := strconv.Atoi(args[4])
-	description := arg[5]
-	detail := arg[6]
-	subTid := arg[7]
+	description := args[5]
+	detail := args[6]
+	subTid := args[7]
 
 	fmt.Println("log>Input Transaction value : " + transactionId)
 
@@ -83,9 +83,9 @@ func (t *SupplyChaincode) moveProduct(stub shim.ChaincodeStubInterface, args []s
 	fmt.Println("CALL >> moveProduct[Chaincode]")
 	from := args[0]
 	to := args[1]
-	pid := arg[2]
-	fromTid = from + "_" + pid
-	toTid = from + "_" + pid
+	pid := args[2]
+	fromTid := from + "_" + pid
+	toTid := to + "_" + pid
 	X, err := strconv.Atoi(args[3])
 	if err != nil {
 		return shim.Error("Invalid transaction amount, expecting a integer value")
