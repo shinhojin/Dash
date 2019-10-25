@@ -147,12 +147,13 @@ instantiateChaincode () {
 	# while 'peer chaincode' command can get the orderer endpoint from the peer (if join was successful),
 	# lets supply it directly as we know it using the "-o" option
 	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
-		peer chaincode instantiate -o orderer.supply.com:7050 -C $CHANNEL_NAME -n supplycc -l ${LANGUAGE} -v 1.0 -c '{"Args":["init"]}' -P "OR	('Org1MSP.member','Org2MSP.member','Org3MSP.member')" 
+		peer chaincode instantiate -o orderer.supply.com:7050 -C $CHANNEL_NAME -n supplycc -l ${LANGUAGE} -v 1.0 -c '{"Args":["init"]}' >&log.txt #-P "OR	('Org1MSP.member','Org2MSP.member','Org3MSP.member')" >&log.txt
 		res=$?
 	else
-		peer chaincode instantiate -o orderer.supply.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n supplycc -l ${LANGUAGE} -v 1.0 -c '{"Args":["init"]}' -P "OR	('Org1MSP.member','Org2MSP.member','Org3MSP.member')" 
+		peer chaincode instantiate -o orderer.supply.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n supplycc -l ${LANGUAGE} -v 1.0 -c '{"Args":["init"]}' >&log.txt #-P "OR	('Org1MSP.member','Org2MSP.member','Org3MSP.member')" >&log.txt
 		res=$?
 	fi
+	cat log.txt
 	verifyResult $res "Chaincode instantiation on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME' failed"
 	echo "===================== Chaincode Instantiation on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME' is successful ===================== "
 	echo
@@ -166,6 +167,14 @@ createChannel
 echo "Having all peers join the channel..."
 joinChannel
 
+echo "Updating anchor peers"
+setGlobals 0 1
+peer channel update -o orderer.supply.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/Org1MSPanchors.tx -tls true --cafile $ORDERER_CA
+setGlobals 0 2
+peer channel update -o orderer.supply.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/Org2MSPanchors.tx -tls true --cafile $ORDERER_CA
+setGlobals 0 3
+peer channel update -o orderer.supply.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/Org3MSPanchors.tx -tls true --cafile $ORDERER_CA
+echo "===================== anchor peer update is successful ===================== "
 
 ## Install chaincode on peer0.org1 and peer0.org2
 echo "Installing chaincode on consumer peer: peer0.org1..."
@@ -184,3 +193,4 @@ installChaincode 1 3
 # Instantiate chaincode on peer1.org1
 echo "Instantiating chaincode on peer1.org1..."
 instantiateChaincode 0 1
+

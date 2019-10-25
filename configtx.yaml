@@ -32,6 +32,7 @@ Organizations:
         AnchorPeers:
             - Host: peer0.org2.supply.com
               Port: 7051
+              
     - &Org3
         Name: Org3MSP
         ID: Org3MSP

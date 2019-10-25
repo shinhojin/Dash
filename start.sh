@@ -1,10 +1,10 @@
 #!/bin/bash
 echo "Dankook Univ, 2019-2 Capstone Design Project"
-echo "     ____             __   "
-echo "    / __ \____ ______/ /_  "
-echo '   / / / / __ `/ ___/ __ \ '
-echo "  / /_/ / /_/ (__  ) / / / "
-echo " /_____/\__,_/____/_/ /_/  "
+echo "           ____             __   "
+echo "          / __ \____ ______/ /_  "
+echo '         / / / / __ `/ ___/ __ \ '
+echo "        / /_/ / /_/ (__  ) / / / "
+echo "       /_____/\__,_/____/_/ /_/  "
 echo "                           "
 echo "========================================="
 echo " ____    _____      _      ____    _____ "
@@ -36,6 +36,7 @@ echo "================================"
 echo "      docker container up       "
 echo "================================"
 #CHANNEL_NAME=$CHANNEL_NAME TIMEOUT=$CLI_TIMEOUT DELAY=$CLI_DELAY docker-compose -f $COMPOSE_FILE up -d
+docker-compose -f ./base/docker-compose-couch.yaml up -d
 docker-compose -f $COMPOSE_FILE up -d
 echo ""
 echo "======================================="
@@ -44,3 +45,17 @@ echo "======================================="
 echo ""
 # from now process will start in containers
 docker exec cli /bin/bash -c "sleep 20;./scripts/generate.sh"
+
+echo
+echo "========= All GOOD, Blockchain network build completed =========== "
+echo
+
+echo
+echo " _____   _   _   ____   "
+echo "| ____| | \ | | |  _ \  "
+echo "|  _|   |  \| | | | | | "
+echo "| |___  | |\  | | |_| | "
+echo "|_____| |_| \_| |____/  "
+echo
+
+exit 0

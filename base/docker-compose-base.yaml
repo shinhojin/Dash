@@ -42,6 +42,10 @@ services:
       - CORE_PEER_ADDRESS=peer0.org1.supply.com:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org1.supply.com:7051
       - CORE_PEER_LOCALMSPID=Org1MSP
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=couchdb0
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=passcouchdb0
     volumes:
         - /var/run/:/host/var/run/
         - ../crypto-config/peerOrganizations/org1.supply.com/peers/peer0.org1.supply.com/msp:/etc/hyperledger/fabric/msp
@@ -61,6 +65,10 @@ services:
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org1.supply.com:7051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org1.supply.com:7051
       - CORE_PEER_LOCALMSPID=Org1MSP
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=couchdb1
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=passcouchdb1
     volumes:
         - /var/run/:/host/var/run/
         - ../crypto-config/peerOrganizations/org1.supply.com/peers/peer1.org1.supply.com/msp:/etc/hyperledger/fabric/msp
@@ -81,6 +89,10 @@ services:
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org2.supply.com:7051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org2.supply.com:7051
       - CORE_PEER_LOCALMSPID=Org2MSP
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb2:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=couchdb2
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=passcouchdb2
     volumes:
         - /var/run/:/host/var/run/
         - ../crypto-config/peerOrganizations/org2.supply.com/peers/peer0.org2.supply.com/msp:/etc/hyperledger/fabric/msp
@@ -100,6 +112,10 @@ services:
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org2.supply.com:7051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org2.supply.com:7051
       - CORE_PEER_LOCALMSPID=Org2MSP
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb3:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=couchdb3
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=passcouchdb3
     volumes:
         - /var/run/:/host/var/run/
         - ../crypto-config/peerOrganizations/org2.supply.com/peers/peer1.org2.supply.com/msp:/etc/hyperledger/fabric/msp
@@ -119,6 +135,10 @@ services:
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org3.supply.com:7051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org3.supply.com:7051
       - CORE_PEER_LOCALMSPID=Org3MSP
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb4:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=couchdb4
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=passcouchdb4
     volumes:
         - /var/run/:/host/var/run/
         - ../crypto-config/peerOrganizations/org3.supply.com/peers/peer0.org3.supply.com/msp:/etc/hyperledger/fabric/msp
@@ -138,6 +158,10 @@ services:
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org3.supply.com:7051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org3.supply.com:7051
       - CORE_PEER_LOCALMSPID=Org3MSP
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb5:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=couchdb5
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=passcouchdb5
     volumes:
         - /var/run/:/host/var/run/
         - ../crypto-config/peerOrganizations/org3.supply.com/peers/peer1.org3.supply.com/msp:/etc/hyperledger/fabric/msp

@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"strconv"
-	"time"
 
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	pb "github.com/hyperledger/fabric/protos/peer"
@@ -14,143 +13,103 @@ type SupplyContract struct {
 }
 
 type product struct {
-	OrderId                string
-	ProductId              string
-	ConsumerId             string
-	ManufactureId          string
-	WholesalerId           string
-	RetailerId             string
-	LogisticsId            string
-	Status                 string
-	MaterialProcessDate     string
-	ManufactureProcessDate string
-	WholesaleProcessDate   string
-	ShippingProcessDate    string
-	RetailProcessDate      string
-	OrderPrice             int
-	ShippingPrice          int
-	DeliveryDate           string
+	OrderId   string
+	Id        string
+	ProductId string
+	Amount    int
+	priceEach int
+	Detail    string
+	SubId     string
 }
 
 func (t *SupplyContract) Init(stub shim.ChaincodeStubInterface) pb.Response {
-	return setupProductSupplyChainOrder(stub)
+	fmt.Println("Supply-ChainCode Init!!")
+	return shim.Success(nil)
 }
 
 func (t *SupplyContract) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 	function, args := stub.GetFunctionAndParameters()
-	if function == "createMaterial" {
-		return t.createMaterial(stub, args)
-	} else if function == "manufactureProcessing" {
-
-		return t.manufactureProcessing(stub, args)
-	} else if function == "wholesalerDistribute" {
-
-		return t.wholesalerDistribute(stub, args)
-	} else if function == "initiateShipment" {
-
-		return t.initiateShipment(stub, args)
-	} else if function == "deliverToRetail" {
-
-		return t.deliverToRetail(stub, args)
-	} else if function == "completeOrder" {
-
-		return t.completeOrder(stub, args)
+	if function == "setProduct" {
+		return t.setProduct(stub, args)
+	} else if function == "moveProduct" {
+		return t.moveProduct(stub, args)
+	} else if function == "useProduct" {
+		return t.useProduct(stub, args)
 	} else if function == "query" {
-
 		return t.query(stub, args)
 	}
 
 	return shim.Error("Invalid function name")
 }
 
-func setupProductSupplyChainOrder(stub shim.ChaincodeStubInterface) pb.Response {
-	_, args := stub.GetFunctionAndParameters()
+func (t *SupplyContract) setProduct(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	fmt.Println("call setProduct")
 	orderId := args[0]
-	consumerId := args[1]
-	orderPrice, _ := strconv.Atoi(args[2])
-	shippingPrice, _ := strconv.Atoi(args[3])
+	id := args[1]
+	productId := args[2]
+	amount, _ := strconv.Atoi(args[3])
+	price, _ := strconv.Atoi(args[4])
+	detail := args[5]
+	sub := args[6]
 	SupplyContract := product{
-		OrderId:       orderId,
-		ConsumerId:    consumerId,
-		OrderPrice:    orderPrice,
-		ShippingPrice: shippingPrice,
-		Status:        "order initiated"}
+		OrderId:   orderId,
+		Id:        id,
+		ProductId: productId,
+		Amount:    amount,
+		priceEach: price,
+		Detail:    detail,
+		SubId:     sub}
 
 	productBytes, _ := json.Marshal(SupplyContract)
-	stub.PutState(SupplyContract.OrderId, productBytes)
-
-	return shim.Success(nil)
-}
-
-func (f *SupplyContract) createMaterial(stub shim.ChaincodeStubInterface, args []string) pb.Response {
-	orderId := args[0]
-	productBytes, _ := stub.GetState(orderId)
-	fd := product{}
-	json.Unmarshal(productBytes, &fd)
-
-	if fd.Status == "order initiated" {
-		fd.ProductId = "PRODUCT_1"
-		currentts := time.Now()
-		fd.MaterialProcessDate = currentts.Format("2019-01-02 15:04:05")
-		fd.Status = "raw product created"
-	} else {
-		fmt.Printf("Order not initiated yet")
-	}
-
-	productBytes, _ = json.Marshal(fd)
 	stub.PutState(orderId, productBytes)
 
 	return shim.Success(nil)
 }
 
-func (f *SupplyContract) manufactureProcessing(stub shim.ChaincodeStubInterface, args []string) pb.Response {
-	orderId := args[0]
-	productBytes, err := stub.GetState(orderId)
-	fd := product{}
-	err = json.Unmarshal(productBytes, &fd)
+func (t *SupplyContract) moveProduct(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	fmt.Println("call moveProduct")
+	from := args[0]
+	to := args[1]
+	amount, _ := strconv.Atoi(args[2])
+
+	FromBytes, err := stub.GetState(from)
+	if err != nil {
+		return shim.Error("Failed to get from orderId:" + err.Error())
+	} else if FromBytes == nil {
+		return shim.Error("Geterr: Data does not exist")
+	}
+	toBytes, err := stub.GetState(to)
+	if err != nil {
+		return shim.Error("Failed to get to orderId:" + err.Error())
+	} else if toBytes == nil {
+		return shim.Error("Geterr: Data does not exist")
+	}
+
+	fromData := product{}
+	err = json.Unmarshal(FromBytes, &fromData)
 	if err != nil {
 		return shim.Error(err.Error())
 	}
-
-	if fd.Status == "raw product created" {
-		fd.ManufactureId = "Manufacture_1"
-		currentts := time.Now()
-		fd.ManufactureProcessDate = currentts.Format("2006-01-02 15:04:05")
-		fd.Status = "manufacture Process"
+	toData := product{}
+	err = json.Unmarshal(toBytes, &toData)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	if fromData.Amount >= amount {
+		fromData.Amount = fromData.Amount - amount
+		toData.Amount = toData.Amount + amount
 	} else {
-		fd.Status = "Error"
-		fmt.Printf("Raw product not initiated yet")
+		return shim.Error("not enough products")
 	}
 
-	productBytes0, _ := json.Marshal(fd)
-	err = stub.PutState(orderId, productBytes0)
+	fromDataBytes, _ := json.Marshal(fromData)
+	err = stub.PutState(from, fromDataBytes)
 	if err != nil {
 		return shim.Error(err.Error())
 	}
 
-	return shim.Success(nil)
-}
-func (f *SupplyContract) wholesalerDistribute(stub shim.ChaincodeStubInterface, args []string) pb.Response {
-	orderId := args[0]
-	productBytes, err := stub.GetState(orderId)
-	fd := product{}
-	err = json.Unmarshal(productBytes, &fd)
-	if err != nil {
-		return shim.Error(err.Error())
-	}
-
-	if fd.Status == "manufacture Process" {
-		fd.WholesalerId = "Wholesaler_1"
-		currentts := time.Now()
-		fd.WholesaleProcessDate = currentts.Format("2019-01-02 15:04:05")
-		fd.Status = "wholesaler distribute"
-	} else {
-		fd.Status = "Error"
-		fmt.Printf("Manufacture not initiated yet")
-	}
-
-	productBytes0, _ := json.Marshal(fd)
-	err = stub.PutState(orderId, productBytes0)
+	toDataBytes, _ := json.Marshal(toData)
+	err = stub.PutState(to, toDataBytes)
 	if err != nil {
 		return shim.Error(err.Error())
 	}
@@ -158,93 +117,45 @@ func (f *SupplyContract) wholesalerDistribute(stub shim.ChaincodeStubInterface, 
 	return shim.Success(nil)
 }
 
-func (f *SupplyContract) initiateShipment(stub shim.ChaincodeStubInterface, args []string) pb.Response {
-	orderId := args[0]
-	productBytes, err := stub.GetState(orderId)
-	fd := product{}
-	err = json.Unmarshal(productBytes, &fd)
+func (t *SupplyContract) useProduct(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	fmt.Println("call useProduct")
+	from := args[0]
+	amount, _ := strconv.Atoi(args[1])
+
+	FromBytes, err := stub.GetState(from)
+	if err != nil {
+		return shim.Error("Failed to get from orderId:" + err.Error())
+	} else if FromBytes == nil {
+		return shim.Error("Geterr: Data does not exist")
+	}
+
+	fromData := product{}
+	err = json.Unmarshal(FromBytes, &fromData)
 	if err != nil {
 		return shim.Error(err.Error())
 	}
 
-	if fd.Status == "wholesaler distribute" {
-		fd.LogisticsId = "LogisticsId_1"
-		currentts := time.Now()
-		fd.ShippingProcessDate = currentts.Format("2006-01-02 15:04:05")
-		fd.Status = "initiated shipment"
+	if fromData.Amount >= amount {
+		fromData.Amount = fromData.Amount - amount
 	} else {
-		fmt.Printf("Wholesaler not initiated yet")
+		return shim.Error("not enough products")
 	}
 
-	productBytes0, _ := json.Marshal(fd)
-	err = stub.PutState(orderId, productBytes0)
-	if err != nil {
-		return shim.Error(err.Error())
-	}
-	return shim.Success(nil)
-}
-
-func (f *SupplyContract) deliverToRetail(stub shim.ChaincodeStubInterface, args []string) pb.Response {
-	orderId := args[0]
-	productBytes, err := stub.GetState(orderId)
-	fd := product{}
-	err = json.Unmarshal(productBytes, &fd)
+	fromDataBytes, _ := json.Marshal(fromData)
+	err = stub.PutState(from, fromDataBytes)
 	if err != nil {
 		return shim.Error(err.Error())
 	}
 
-	if fd.Status == "initiated shipment" {
-		fd.RetailerId = "Retailer_1"
-		currentts := time.Now()
-		fd.RetailProcessDate = currentts.Format("2019-01-02 15:04:05")
-		fd.Status = "Retailer started"
-
-	} else {
-		fmt.Printf("Shipment not initiated yet")
-	}
-
-	productBytes0, _ := json.Marshal(fd)
-	err = stub.PutState(orderId, productBytes0)
-	if err != nil {
-		return shim.Error(err.Error())
-	}
-	return shim.Success(nil)
-}
-
-func (f *SupplyContract) completeOrder(stub shim.ChaincodeStubInterface, args []string) pb.Response {
-	orderId := args[0]
-	productBytes, err := stub.GetState(orderId)
-	fd := product{}
-	err = json.Unmarshal(productBytes, &fd)
-	if err != nil {
-		return shim.Error(err.Error())
-	}
-
-	if fd.Status == "Retailer started" {
-		currentts := time.Now()
-		fd.DeliveryDate = currentts.Format("2019-01-02 15:04:05")
-		fd.Status = "Consumer received order"
-	} else {
-		fmt.Printf("Retailer not initiated yet")
-	}
-
-	productBytes0, _ := json.Marshal(fd)
-	err = stub.PutState(orderId, productBytes0)
-	if err != nil {
-		return shim.Error(err.Error())
-	}
 	return shim.Success(nil)
 }
 
 func (f *SupplyContract) query(stub shim.ChaincodeStubInterface, args []string) pb.Response {
-	var ENIITY string
-	var err error
-
 	if len(args) != 1 {
 		return shim.Error("Incorrect number of arguments. Expected ENIITY Name")
 	}
 
-	ENIITY = args[0]
+	ENIITY := args[0]
 	Avalbytes, err := stub.GetState(ENIITY)
 	if err != nil {
 		jsonResp := "{\"Error\":\"Failed to get state for " + ENIITY + "\"}"

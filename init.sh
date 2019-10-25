@@ -58,3 +58,10 @@ rm -rf ./crypto-config/*
 echo "CFG_PATH="$FABRIC_CFG_PATH
 generateCerts
 generateChannelArtifacts
+  echo
+  echo "#################################################################"
+  echo "### Generating channel configuration transaction 'anchors.tx' ###"
+  echo "#################################################################"
+configtxgen -profile supplyOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org1MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org1MSP
+configtxgen -profile supplyOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org2MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org2MSP
+configtxgen -profile supplyOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org3MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org3MSP
