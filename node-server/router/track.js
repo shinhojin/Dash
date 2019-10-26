@@ -32,9 +32,9 @@ var doQuery = function(param){
             "label"    : data.OrderId,
             "version"  : "v1.0",
             "link" : {
-				"name" : "Link",
+				"name" : data.ProductId,
 				"nodeName" : data.OrderId,
-				"direction" : "ASYN"
+				"direction" : "SYNC"
 			},
     }
     //console.log("THIS IS FIRST DATA")

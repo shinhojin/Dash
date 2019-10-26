@@ -1,11 +1,62 @@
 <html>
     <head>
-
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="author" content="colorlib.com">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:400,800" rel="stylesheet" />
+        <link href="index.css" rel="stylesheet" />
+        <style>
+            .navigation-bar {
+                width: 100%;  /* i'm assuming full width */
+                height: 80px; /* change it to desired width */
+                background-color: rgb(11, 35, 71); /* change to desired color */
+            }
+            .logo {
+                display: inline-block;
+                vertical-align: top;
+                width: 50px;
+                height: 50px;
+                margin-right: 20px;
+                margin-top: 15px;    /* if you want it vertically middle of the navbar. */
+            }
+            .navigation-bar > a {
+                display: inline-block;
+                vertical-align: top;
+                color: white;
+                margin-right: 20px;
+                height: 80px;        /* if you want it to take the full height of the bar */
+                line-height: 80px;    /* if you want it vertically middle of the navbar */
+            }
+            .navigation-bar > a:hover {
+                background: rgb(44, 118, 255);
+            }
+        </style>
     </head>
     <body>
+        <nav class="navigation-bar">
+            <a href="test"><img class="logo" src="images/DASH_logo.png" style="width : 130px"></a>
+            <a href="#">make Product</a>
+            <a href="#">use Product</a>
+            <a href="#">move Product</a>
+        </nav>
+
+        <div class="s006">
         <form action="/track" method="POST">
-            <input type="text" name="comment">
-            <button type="submit">제출</button>
+            <fieldset>
+                <legend>Dash Tracing System</legend>
+                <div class="inner-form">
+                    <div class="input-field">
+                        <button class="btn-search" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                            </svg>
+                        </button>
+                        <input type="text" name="comment">
+                    </div>
+                </div>
+            </fieldset>
         </form>
+        </div>
     </body>
 </html>

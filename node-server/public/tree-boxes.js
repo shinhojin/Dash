@@ -18,13 +18,13 @@ function treeBoxes(urlService, jsonData)
 	var margin = {
 					top : 0,
 					right : 0,
-					bottom : 100,
+					bottom : 10,
 					left : 0
 				 },
 		// Height and width are redefined later in function of the size of the tree
 		// (after that the data are loaded)
-		width = 800 - margin.right - margin.left,
-		height = 400 - margin.top - margin.bottom;
+		width = 1000 - margin.right - margin.left,
+		height = 800 - margin.top - margin.bottom;
 	
 	var rectNode = { width : 120, height : 45, textMargin : 5 },
 		tooltip = { width : 150, height : 40, textMargin : 5 };
@@ -282,7 +282,7 @@ function treeBoxes(urlService, jsonData)
 
 		function linkType(link) {
 			if (link.direction == 'SYNC')
-				return "Synchronous [\u2194]";
+				return "Transaction Occur [\u2194]";
 			else
 			{
 				if (link.direction == 'ASYN')
