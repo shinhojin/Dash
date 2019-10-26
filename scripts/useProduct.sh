@@ -80,7 +80,7 @@ chaincodeInvokeUseProduct() {
     FROM=$3
     AMOUNT=$4
     CODE={\"Args\":[\"useProduct\",\"$3\",\"$4\"]}
-    echo $CODE
+    #echo $CODE
 	setGlobals $PEER $ORG
 	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
 		peer chaincode invoke -o orderer.supply.com:7050 -C $CHANNEL_NAME -n supplycc -c $CODE >&log.txt
@@ -88,10 +88,9 @@ chaincodeInvokeUseProduct() {
 		peer chaincode invoke -o orderer.supply.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n supplycc -c $CODE >&log.txt
 	fi
 	res=$?
-	cat log.txt
+	#cat log.txt
 	verifyResult $res "Invoke:useProduct execution on PEER$PEER failed "
-	echo "Invoke:useProduct transaction on PEER $PEER on channel '$CHANNEL_NAME' is successful. "
-	echo
+	#echo "Invoke:useProduct transaction on PEER $PEER on channel '$CHANNEL_NAME' is successful. "
 }
 
 chaincodeInvokeUseProduct $1 $2 $3 $4

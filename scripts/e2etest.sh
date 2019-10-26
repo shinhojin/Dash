@@ -77,20 +77,28 @@ setGlobals () {
 setGlobals 0 1
 
 peer chaincode invoke -o orderer.supply.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n supplycc -c '{"Args":["setProduct", "fac1_pd1", "fac1", "pd1", "3", "5", "created", "NULL"]}' >&log.txt
-peer chaincode invoke -o orderer.supply.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n supplycc -c '{"Args":["setProduct", "fac2_pd1", "fac2", "pd1", "1", "5", "created", "NULL"]}' >&log.txt
+peer chaincode invoke -o orderer.supply.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n supplycc -c '{"Args":["setProduct", "fac1_pd2", "fac1", "pd2", "2", "3", "created", "NULL"]}' >&log.txt
 cat log.txt
 echo "Invoke:setProduct transaction on PEER $PEER on channel '$CHANNEL_NAME' is successful. "
 sleep 5
 peer chaincode invoke -o orderer.supply.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n supplycc -c '{"Args":["useProduct", "fac1_pd1", "1"]}' >&log.txt
 cat log.txt
 echo "Invoke:useProduct transaction on PEER $PEER on channel '$CHANNEL_NAME' is successful. "
+peer chaincode invoke -o orderer.supply.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n supplycc -c '{"Args":["useProduct", "fac1_pd2", "1"]}' >&log.txt
+cat log.txt
+echo "Invoke:useProduct transaction on PEER $PEER on channel '$CHANNEL_NAME' is successful. "
+peer chaincode invoke -o orderer.supply.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n supplycc -c '{"Args":["setProduct", "fac2_pd3", "fac2", "pd3", "1", "9", "created", "%fac1_pd1%%fac1_pd2%"]}'
+echo "Invoke:setProduct transaction on PEER $PEER on channel '$CHANNEL_NAME' is successful. "
 sleep 5
-peer chaincode invoke -o orderer.supply.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n supplycc -c '{"Args":["moveProduct", "fac1_pd1", "fac2_pd1", "2"]}' >&log.txt
+peer chaincode invoke -o orderer.supply.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n supplycc -c '{"Args":["setProduct", "stor0_pd3", "stor0", "pd3", "0", "10", "created", "%fac2_pd3%"]}'
+echo "Invoke:setProduct transaction on PEER $PEER on channel '$CHANNEL_NAME' is successful. "
+sleep 5
+peer chaincode invoke -o orderer.supply.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n supplycc -c '{"Args":["moveProduct", "fac2_pd3", "stor0_pd3", "1"]}' >&log.txt
 cat log.txt
 echo "Invoke:moveProduct transaction on PEER $PEER on channel '$CHANNEL_NAME' is successful. "
 sleep 5
-peer chaincode invoke -o orderer.supply.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n supplycc -c '{"Args":["query", "fac1_pd1"]}' >&log.txt
+peer chaincode invoke -o orderer.supply.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n supplycc -c '{"Args":["query", "stor0_pd3"]}' >&log.txt
 cat log.txt
 echo "Invoke:queary transaction on PEER $PEER on channel '$CHANNEL_NAME' is successful. "
 
-./scripts/query.sh 0 1 fac2_pd1
+./scripts/query.sh 0 1 stor0_pd3

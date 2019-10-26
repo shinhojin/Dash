@@ -83,7 +83,7 @@ chaincodeInvokeMoveProduct() {
     TO=$4
     AMOUNT=$5
     CODE={\"Args\":[\"moveProduct\",\"$3\",\"$4\",\"$5\"]}
-    echo $CODE
+    #echo $CODE
 	setGlobals $PEER $ORG
 	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
 		peer chaincode invoke -o orderer.supply.com:7050 -C $CHANNEL_NAME -n supplycc -c $CODE >&log.txt
@@ -91,10 +91,9 @@ chaincodeInvokeMoveProduct() {
 		peer chaincode invoke -o orderer.supply.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n supplycc -c $CODE >&log.txt
 	fi
 	res=$?
-	cat log.txt
+	#cat log.txt
 	verifyResult $res "Invoke:moveProduct execution on PEER$PEER failed "
-	echo "Invoke:moveProduct transaction on PEER $PEER on channel '$CHANNEL_NAME' is successful. "
-	echo
+	#echo "Invoke:moveProduct transaction on PEER $PEER on channel '$CHANNEL_NAME' is successful. "
 }
 
 chaincodeInvokeMoveProduct $1 $2 $3 $4 $5

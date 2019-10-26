@@ -79,7 +79,7 @@ chaincodeQuery () {
   ORG=$2
   QUERY=$3
   CODE={\"Args\":[\"query\",\"$3\"]}
-  echo $CODE
+  #echo $CODE
   setGlobals $PEER $ORG
 	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
 		peer chaincode invoke -o orderer.supply.com:7050 -C $CHANNEL_NAME -n supplycc -c $CODE >&log.txt
@@ -89,8 +89,7 @@ chaincodeQuery () {
 	res=$?
 	cat log.txt
 	verifyResult $res "Invoke:query execution on PEER$PEER failed "
-	echo "Invoke:query transaction on PEER $PEER on channel '$CHANNEL_NAME' is successful. "
-	echo
+	#echo "Invoke:query transaction on PEER $PEER on channel '$CHANNEL_NAME' is successful. "
 }
 
 chaincodeQuery $1 $2 $3 

@@ -85,8 +85,7 @@ chaincodeInvokeMakeProduct() {
     DETAIL=$8
     SUB=$9
     CODE={\"Args\":[\"setProduct\",\"$3\",\"$4\",\"$5\",\"$6\",\"$7\",\"$8\",\"$9\"]}
-    echo $CODE
-    echo $CODE
+    #echo $CODE
 	setGlobals $PEER $ORG
 	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
 		#peer chaincode invoke -o orderer.supply.com:7050 -C $CHANNEL_NAME -n supplycc -c '{"Args":["setProduct", "fac1_pd1", "fac1", "pd1", "3", "5", "created", "NULL"]}' >&log.txt
@@ -98,10 +97,9 @@ chaincodeInvokeMakeProduct() {
         #echo "peer chaincode invoke -o orderer.supply.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n supplycc -c $CODE"
 	fi
 	res=$?
-	cat log.txt
+	#cat log.txt
 	verifyResult $res "Invoke:setProductexecution on PEER$PEER failed "
-	echo "Invoke:setProduct transaction on PEER $PEER on channel '$CHANNEL_NAME' is successful. "
-	echo
+	#echo "Invoke:setProduct transaction on PEER $PEER on channel '$CHANNEL_NAME' is successful. "
 }
 
 chaincodeInvokeMakeProduct $1 $2 $3 $4 $5 $6 $7 $8 $9

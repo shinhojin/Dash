@@ -68,7 +68,7 @@ echo "======================================="
 echo "         Remove Containers"
 echo "======================================="
 echo ""
-./stop.sh
+#./stop.sh
 
 echo
 echo "========= All GOOD, Supplychain execution completed =========== "
