@@ -26,7 +26,7 @@ function treeBoxes(urlService, jsonData)
 		width = 1000 - margin.right - margin.left,
 		height = 800 - margin.top - margin.bottom;
 	
-	var rectNode = { width : 120, height : 45, textMargin : 5 },
+	var rectNode = { width : 150, height : 60, textMargin : 5 },
 		tooltip = { width : 150, height : 40, textMargin : 5 };
 	var i = 0,
 		duration = 750,
@@ -197,6 +197,7 @@ function treeBoxes(urlService, jsonData)
 							+ (rectNode.height - rectNode.textMargin * 2) + 'px;" class="node-text wordwrap">'
 							+ '<b>' + d.nodeName + '</b><br>'
 							+ '<b>Detail: </b>' + d.code + '<br>'
+							+ '<b>Date: </b>' + d.date + '<br>'
 							+ '</div>';
 				})
 		.on('mouseover', function(d) {

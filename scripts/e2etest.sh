@@ -100,5 +100,9 @@ sleep 5
 peer chaincode invoke -o orderer.supply.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n supplycc -c '{"Args":["query", "stor0_pd3"]}' >&log.txt
 cat log.txt
 echo "Invoke:queary transaction on PEER $PEER on channel '$CHANNEL_NAME' is successful. "
+sleep 5
+peer chaincode invoke -o orderer.supply.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n supplycc -c '{"Args":["history", "fac1_pd1"]}' >&log.txt
+cat log.txt
+echo "Invoke:history transaction on PEER $PEER on channel '$CHANNEL_NAME' is successful. "
 
 ./scripts/query.sh 0 1 stor0_pd3

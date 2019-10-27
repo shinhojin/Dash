@@ -30,7 +30,7 @@ var doQuery = function(param){
             "type"     : data.Id.replace(/[0-9]/g, ""),
             "code"     : data.Detail,
             "label"    : data.OrderId,
-            "version"  : "v1.0",
+            "date"     : data.Date,
             "link" : {
 				"name" : data.ProductId,
 				"nodeName" : data.OrderId,

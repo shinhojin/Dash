@@ -3,7 +3,7 @@ var router = express.Router()
 var path = require('path')
 
 router.get("/", function(req, res, next){
-    res.render('test')
+    res.render('index')
 })
 
 module.exports = router

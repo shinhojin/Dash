@@ -71,7 +71,7 @@ setGlobals () {
 		echo "================== ERROR !!! ORG OR PEER Unknown =================="
 	fi
 
-	env |grep CORE
+	#env |grep CORE
 }
 
 chaincodeQuery () {
@@ -89,7 +89,8 @@ chaincodeQuery () {
 	res=$?
 	cat log.txt
 	verifyResult $res "Invoke:query execution on PEER$PEER failed "
-	#echo "Invoke:query transaction on PEER $PEER on channel '$CHANNEL_NAME' is successful. "
+	echo "Invoke:query transaction on PEER $PEER on channel '$CHANNEL_NAME' is successful. "
 }
 
 chaincodeQuery $1 $2 $3 
+sleep 3

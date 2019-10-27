@@ -24,11 +24,23 @@ app.set('views', path.join(__dirname, 'view'))
 app.set('view engine', 'ejs');
 
 // test pages
-var test = require('./router/test')
-app.use('/test', test)
+var index = require('./router/index')
+app.use('/index', index)
 
 var track = require('./router/track')
 app.use('/track', track)
+
+var make = require('./router/make')
+app.use('/make', make)
+
+var move = require('./router/move')
+app.use('/move', move)
+
+var use = require('./router/use')
+app.use('/use', use)
+
+var hist = require('./router/history')
+app.use('/history', hist)
 
 app.use(function (err, req, res, next) {
 	console.error(err);

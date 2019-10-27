@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="author" content="colorlib.com">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:400,800" rel="stylesheet" />
+        <link href="index.css" rel="stylesheet" />
+        <link href="nav.css" rel="stylesheet" />
+    </head>
+    <body>
+        <nav class="navigation-bar">
+                <a href="index"><img class="logo" src="images/DASH_logo.png" style="width : 130px"></a>
+                <a href="make">make Product</a>
+                <a href="use">use Product</a>
+                <a href="move">move Product</a>
+                <a href="history">transaction History</a>
+        </nav>
+    </div>
+    <div>
+            <form action="/use" method="POST">
+                <table>
+                    <tr>
+                        <td>OrderId</td>
+                        <td><input type="text" name="orderId" value="orderId"></td>
+                    </tr>
+                    <tr>
+                        <td>Amount</td>
+                        <td><input type="text" name="amount" value="amount"></td>
+                    </tr>
+                </table>
+
+                <button type="submit" class="ajaxsend">submit</button>    
+            </form>
+        </div>
+    <%if(data != null){%>
+        <br><h1>Result</h1><br>
+        <div class="result">
+        <%=data.terminal%>
+        </div>
+    <%}%>
+</div>
+        <footer class="foot">
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Dankook Univ. 2019-2 Cpstone Design.<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Team Dash
+                </div>
+    </footer>
+    </body>
+</html>

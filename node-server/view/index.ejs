@@ -6,41 +6,16 @@
         <meta name="author" content="colorlib.com">
         <link href="https://fonts.googleapis.com/css?family=Poppins:400,800" rel="stylesheet" />
         <link href="index.css" rel="stylesheet" />
-        <style>
-            .navigation-bar {
-                width: 100%;  /* i'm assuming full width */
-                height: 80px; /* change it to desired width */
-                background-color: rgb(11, 35, 71); /* change to desired color */
-            }
-            .logo {
-                display: inline-block;
-                vertical-align: top;
-                width: 50px;
-                height: 50px;
-                margin-right: 20px;
-                margin-top: 15px;    /* if you want it vertically middle of the navbar. */
-            }
-            .navigation-bar > a {
-                display: inline-block;
-                vertical-align: top;
-                color: white;
-                margin-right: 20px;
-                height: 80px;        /* if you want it to take the full height of the bar */
-                line-height: 80px;    /* if you want it vertically middle of the navbar */
-            }
-            .navigation-bar > a:hover {
-                background: rgb(44, 118, 255);
-            }
-        </style>
+        <link href="nav.css" rel="stylesheet" />
     </head>
     <body>
         <nav class="navigation-bar">
-            <a href="test"><img class="logo" src="images/DASH_logo.png" style="width : 130px"></a>
-            <a href="#">make Product</a>
-            <a href="#">use Product</a>
-            <a href="#">move Product</a>
+                <a href="index"><img class="logo" src="images/DASH_logo.png" style="width : 130px"></a>
+                <a href="make">make Product</a>
+                <a href="use">use Product</a>
+                <a href="move">move Product</a>
+                <a href="history">transaction History</a>
         </nav>
-
         <div class="s006">
         <form action="/track" method="POST">
             <fieldset>
@@ -58,5 +33,11 @@
             </fieldset>
         </form>
         </div>
+        <footer class="foot">
+            <div>
+                &nbsp;&nbsp;&nbsp;&nbsp;Dankook Univ. 2019-2 Cpstone Design.<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Team Dash
+            </div>
+    </footer>
     </body>
 </html>

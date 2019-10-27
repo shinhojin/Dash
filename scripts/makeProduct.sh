@@ -71,7 +71,7 @@ setGlobals () {
 		echo "================== ERROR !!! ORG OR PEER Unknown =================="
 	fi
 
-	env |grep CORE
+	#env |grep CORE
 }
 
 chaincodeInvokeMakeProduct() {
@@ -97,9 +97,10 @@ chaincodeInvokeMakeProduct() {
         #echo "peer chaincode invoke -o orderer.supply.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n supplycc -c $CODE"
 	fi
 	res=$?
-	#cat log.txt
+	cat log.txt
 	verifyResult $res "Invoke:setProductexecution on PEER$PEER failed "
-	#echo "Invoke:setProduct transaction on PEER $PEER on channel '$CHANNEL_NAME' is successful. "
+	echo "Invoke:setProduct transaction on PEER $PEER on channel '$CHANNEL_NAME' is successful. "
 }
 
 chaincodeInvokeMakeProduct $1 $2 $3 $4 $5 $6 $7 $8 $9
+sleep 3
