@@ -12,6 +12,7 @@ end 2 end test for fabric
 start fabric with  
 > ./init.sh  
 > ./start.sh  
+
 start node with  
 > node ./node-server/app.js  
 
