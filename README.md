@@ -9,7 +9,7 @@ Supply Chain with Hyperledger Fabric 1.4.3
 
 ## Start
 > ./init.sh  
-> ./start.sh
+> ./start.sh  
 > node ./node-server/app.js  
 
 ## stop
