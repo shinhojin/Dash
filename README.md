@@ -15,5 +15,6 @@ start fabric with
 start node with  
 > node ./node-server/app.js  
 
-## stop
+## stop  
+stop and remove all container with  
 > ./stop.sh
