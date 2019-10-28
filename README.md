@@ -4,12 +4,15 @@ Dankook Univ. Dept. Software Engineering
 
 Supply Chain with Hyperledger Fabric 1.4.3  
 
-## Test
+## Test  
+end 2 end test for fabric  
 > ./e2e_test.sh
 
 ## Start
+start fabric with  
 > ./init.sh  
 > ./start.sh  
+start node with  
 > node ./node-server/app.js  
 
 ## stop
