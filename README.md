@@ -18,4 +18,4 @@ start node with
 
 ## stop  
 stop and remove all container with  
-> ./stop.sh
+> ./stop.sh ---
